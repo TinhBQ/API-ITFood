@@ -13,8 +13,8 @@ app.use('/users', userRoutes);
 app.use('/users', addressRoutes);
 app.use('/uploads', express.static('uploads'));
 
-app.use(notFound);
-app.use(errorHandler);
+// app.use(notFound);
+// app.use(errorHandler);
 
 
 
