@@ -23,8 +23,8 @@ const STATUS = {
 const COLLECTION = {
     USER: "User",
     ADDRESS: "Address",
-    CATEGORY: "Category"
+    CATEGORY: "Category",
+    PRODUCT: "Product"
 };
-
 
 module.exports = { MAX_RECORDS, DEFAULT_VALUES, DEFAULT_GENDER, DEFAULT_ROLES, STATUS, COLLECTION };

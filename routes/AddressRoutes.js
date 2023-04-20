@@ -8,6 +8,5 @@ router.post('/add-address', addressController.addAddress);
 router.patch('/update-address', addressController.updateAddress);
 router.delete('/delete-address', addressController.deleteAddress);
 
-
 module.exports = router;
 
