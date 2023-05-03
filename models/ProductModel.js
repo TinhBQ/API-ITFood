@@ -15,10 +15,6 @@ const productSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
-    promotion: {
-        type: Number,
-        required: true
-    },
     quantity: {
         type: Number,
         required: true,

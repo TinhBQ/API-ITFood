@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { userModel, addressModel } = require('../models/index.js')
+const { userModel, addressModel, cartModel } = require('../models/index.js')
 const Exception = require('../exceptions/Exception.js');
 const jwt = require('jsonwebtoken');
 
@@ -27,12 +27,24 @@ const register = async ({
             email,
             gender
         });
-
         if (newUser) {
-            await addressModel.create({
+            const existingAddress = await addressModel.create({
                 address,
                 userId: newUser._id
             });
+            if (existingAddress) {
+                const existingCart = await cartModel.create({
+                    userId: newUser._id
+                });
+                if (!existingCart) {
+                    await addressModel.deleteById(existingAddress._id);
+                    await userModel.deleteById(newUser._id);
+                    throw new Exception(Exception.CANNOT_REGISTER_USER);
+                }
+            } else {
+                await userModel.deleteById(newUser._id);
+                throw new Exception(Exception.CANNOT_REGISTER_USER);
+            }
         } else {
             throw new Exception(Exception.CANNOT_REGISTER_USER);
         }
@@ -168,8 +180,8 @@ const updateUser = async ({
 
 const updateFile = async (userId, imagePath) => {
     let existingUser = await userModel.findById(userId);
-    if(!!existingUser) {
-        if(imagePath) {
+    if (!!existingUser) {
+        if (imagePath) {
             existingUser.avatar = imagePath ?? existingUser.avatar;
             await existingUser.save();
 
@@ -192,4 +204,4 @@ const updateFile = async (userId, imagePath) => {
     }
 }
 
-module.exports = { register, login, forgotPassword, resetPassword, updateUser,updateFile };
+module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile };

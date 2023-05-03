@@ -18,6 +18,13 @@ module.exports = class Exception extends Error {
     static ADDRESS_EXIST= 'Address already exists'
     static UPDATE_ADDRESS_FAILED = 'Update address failed';
     static DELETE_ADDRESS_FAILED = 'Delete address failed';
+    static GET_CATEGOIES_FAILED = 'Get categories failed';
+    static CATEGORY_DOES_NOT_EXIST = "Category doesn't exist";
+    static GET_PRODUCTS_FAILED = 'Get products failed';
+    static ADD_PRODUCT_TO_CART_FAILED = 'Add Product to Cart failed';
+    static UPDATE_PRODUCT_IN_CART_FAILED = 'Update Product in Cart failed';
+    static DELETE_PRODUCT_IN_CART_FAILED = 'Delete Product from Cart failed';
+    static PRODUCT_ALREADY_EXISTS_IN_CART = 'Product already exists in Cart'
 
 
     constructor(message, validatorErrors={}) {

@@ -1,11 +1,10 @@
 const { categoryModel } = require('../models/index.js');
 const Exception = require('../exceptions/Exception.js');
 
-
 const getCategories = async ({
     page,
     size,
-    searchString,
+    searchString
 }) => {
     // aggregate data for all students
     page = parseInt(page);
@@ -17,19 +16,37 @@ const getCategories = async ({
             $match: {
                 $or: [
                     {
-                        name: {$regex: `.*${searchString}.*`, $options: 'i'}
+                        name: { $regex: `.*${searchString}.*`, $options: 'i' }
                     }
                 ]
             }
         },
         {
-            $skip: (page -1) * size // số phần tử bỏ qua
+            $skip: (page - 1) * size // số phần tử bỏ qua
         },
         {
             $limit: size // Giới hạn phần tử trong size
+        },
+        {
+            $project: {
+                name: 1,
+                image: 1
+            }
         }
     ]);
-    return filteredCategories;
+
+    if (filteredCategories) {
+        return filteredCategories;
+    } else {
+        throw new Exception(Exception.GET_CATEGOIES_FAILED);
+    }
 };
 
-module.exports = { getCategories }
+const getCategoriesCount = async ()=> {
+    const count = await categoryModel.count();
+    return {
+        result: count
+    }
+}
+
+module.exports = { getCategories, getCategoriesCount }

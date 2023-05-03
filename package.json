@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "debug": "node inspect server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "deploy": "firebase deploy --only functions:it4food"
   },
   "keywords": [],
   "author": "TinhBQ",
