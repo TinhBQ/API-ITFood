@@ -11,5 +11,12 @@
 ![image](https://user-images.githubusercontent.com/81704759/236416895-9036aba7-3f6c-43ec-95a0-ae1ce66f3553.png)
 ## 6. Upload Image
 ## 7. Get Addresses
+![image](https://user-images.githubusercontent.com/81704759/236426174-e273bf18-01ca-4dab-915a-116ac2b1d698.png)
+## 8. Add Address
+![image](https://user-images.githubusercontent.com/81704759/236426478-04ffd512-8049-4fb6-83ee-25595f3ff678.png)
+## 9. Update Address
+![image](https://user-images.githubusercontent.com/81704759/236426782-96ad8893-f953-40ec-ae36-37e3d981244b.png)
+## 10. Delete Address
+![image](https://user-images.githubusercontent.com/81704759/236426987-1ceb9a9b-7d33-4dda-aded-b89b5e355bdf.png)
 
 
