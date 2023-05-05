@@ -3,5 +3,13 @@ const addressRepository = require('./AddressRepository.js');
 const categoryRepository = require('./CategoryRepository.js');
 const productRepository = require('./ProductRepository.js');
 const cartItemRepository = require('./CartItemRepository.js');
+const orderRepository = require('./OrderRepository.js');
 
-module.exports = { userRepository, addressRepository, categoryRepository, productRepository, cartItemRepository }
+module.exports = {
+    userRepository,
+    addressRepository,
+    categoryRepository,
+    productRepository,
+    cartItemRepository,
+    orderRepository
+}

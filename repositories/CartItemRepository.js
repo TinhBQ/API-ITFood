@@ -66,7 +66,7 @@ const updateProduct = async ({
     }
 };
 
-const deleteProduct = async({
+const deleteProduct = async ({
     userId,
     productId
 }) => {
@@ -97,17 +97,21 @@ const getProducts = async ({ userId }) => {
             throw new Exception(Exception.DELETE_PRODUCT_IN_CART_FAILED);
         }
 
-        let existingCartItem = await cartItemModel.find({ cartId: existingCart._id }, {_id: 0, product: 1}).populate(
+        let existingCartItem = await cartItemModel.find({ cartId: existingCart._id }, { _id: 0, product: 1, quantity: 1 }).populate(
             {
                 path: "product",
-                select: {name: 1, description: 1, price: 1, quantity: 1, image: 1}
+                select: {_id: 0, name: 1, description: 1, price: 1, image: 1 }
             });
 
-        let result = existingCartItem.map( element => {
-            return element.product;
-        })
-
-        return { data: result };
+        let result = existingCartItem.map(element => {
+            let newObject = element.product;
+            newObject.quantity = element.quantity;
+            return newObject;
+        });
+    
+        return {
+            data: result
+        };
 
     } else {
         throw new Exception(Exception.DELETE_PRODUCT_IN_CART_FAILED);

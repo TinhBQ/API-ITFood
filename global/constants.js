@@ -26,7 +26,15 @@ const COLLECTION = {
     CATEGORY: "Category",
     PRODUCT: "Product",
     CART: "Cart",
-    CART: "CartItem"
+    CART: "CartItem",
+    ORDER: "Order",
+    DELIVERY: "Delivery"
 };
 
-module.exports = { MAX_RECORDS, DEFAULT_VALUES, DEFAULT_GENDER, DEFAULT_ROLES, STATUS, COLLECTION };
+const DELIVERY = {
+    EXPRESS: "Express",
+    SAVE: "Save",
+    FAST :"Fast"
+}
+
+module.exports = { MAX_RECORDS, DEFAULT_VALUES, DEFAULT_GENDER, DEFAULT_ROLES, STATUS, COLLECTION, DELIVERY };

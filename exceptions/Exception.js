@@ -25,6 +25,9 @@ module.exports = class Exception extends Error {
     static UPDATE_PRODUCT_IN_CART_FAILED = 'Update Product in Cart failed';
     static DELETE_PRODUCT_IN_CART_FAILED = 'Delete Product from Cart failed';
     static PRODUCT_ALREADY_EXISTS_IN_CART = 'Product already exists in Cart'
+    static GET_TOTAL_PRICE_FAILED = 'Get total price failed';
+    static ORDER_FAILED = 'Order failed';
+    static GET_STATUS_FAILED = 'Status failed';
 
 
     constructor(message, validatorErrors={}) {
