@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const { userModel, addressModel, cartModel } = require('../models/index.js')
 const Exception = require('../exceptions/Exception.js');
 const jwt = require('jsonwebtoken');
+const { URL } = require('../global/constants.js');
 
 const register = async ({
     phoneNumber,
@@ -193,7 +194,7 @@ const updateFile = async (userId, imagePath) => {
                 name: existingUser.name,
                 email: existingUser.email,
                 gender: existingUser.gender,
-                avatar: existingUser.avatar,
+                avatar: URL + existingUser.avatar,
                 address: addresses[0].address,
             }
         } else {

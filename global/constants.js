@@ -1,5 +1,7 @@
 const MAX_RECORDS = 100;
 
+const URL = 'https://it4food.onrender.com/';
+
 const DEFAULT_VALUES = {
     AVATAR: 'https://1.bp.blogspot.com/-CV8fOXMMw60/YZ-UJ4X9sAI/AAAAAAAACMc/2Svet97exjgNdJ9CeTKUU3OuA-mnCQEzwCLcBGAsYHQ/s595/3a.jpg',
     IMAGE_COURSE: ""
@@ -34,7 +36,16 @@ const COLLECTION = {
 const DELIVERY = {
     EXPRESS: "Express",
     SAVE: "Save",
-    FAST :"Fast"
+    FAST: "Fast"
 }
 
-module.exports = { MAX_RECORDS, DEFAULT_VALUES, DEFAULT_GENDER, DEFAULT_ROLES, STATUS, COLLECTION, DELIVERY };
+module.exports = {
+    MAX_RECORDS,
+    DEFAULT_VALUES,
+    DEFAULT_GENDER,
+    DEFAULT_ROLES,
+    STATUS,
+    COLLECTION,
+    DELIVERY,
+    URL
+};
