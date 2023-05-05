@@ -9,4 +9,7 @@
 ![image](https://user-images.githubusercontent.com/81704759/236416571-0f5cd4fc-0cc9-4d50-8337-d584e0287d84.png)
 ## 5. Update User
 ![image](https://user-images.githubusercontent.com/81704759/236416895-9036aba7-3f6c-43ec-95a0-ae1ce66f3553.png)
+## 6. Upload Image
+## 7. Get Addresses
+
 
