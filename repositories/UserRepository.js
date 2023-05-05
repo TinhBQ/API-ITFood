@@ -80,7 +80,7 @@ const login = async ({
                 gender: existingUser.gender,
                 avatar: existingUser.avatar,
                 address: addresses[0].address,
-                token: token
+                // token: token
             }
 
         } else {
