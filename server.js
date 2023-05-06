@@ -9,7 +9,8 @@ const {
     categoryRoutes,
     productRoutes,
     cartItemRoutes,
-    orderRoutes
+    orderRoutes,
+    deliveryRoutes
 } = require('./routes/index.js')
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/products', productRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/cart-items', cartItemRoutes);
 app.use('/orders', orderRoutes);
+app.use('/deliveries', deliveryRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -17,6 +17,7 @@ const getProducts = async (req, res) => {
         const filteredCategories = await productRepository.getProducts({ categoryId, page, size, searchString });
 
         res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
             message: 'Get Products Successfully',
             // size: filteredCategories.length,
             // page,

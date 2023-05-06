@@ -28,6 +28,7 @@ module.exports = class Exception extends Error {
     static GET_TOTAL_PRICE_FAILED = 'Get total price failed';
     static ORDER_FAILED = 'Order failed';
     static GET_STATUS_FAILED = 'Status failed';
+    static GET_DELIVER_FAILED = 'Deliver failed';
 
 
     constructor(message, validatorErrors={}) {

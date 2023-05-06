@@ -4,5 +4,14 @@ const categoryRoutes = require('./CategoryRoutes.js');
 const productRoutes = require('./ProductRoutes.js');
 const cartItemRoutes = require('./CartItemRoutes.js');
 const orderRoutes = require('./OrderRoutes.js');
+const deliveryRoutes = require('./DeliveryRoutes.js');
 
-module.exports = { userRoutes, addressRoutes, categoryRoutes, productRoutes, cartItemRoutes, orderRoutes };
+module.exports = {
+    userRoutes,
+    addressRoutes,
+    categoryRoutes,
+    productRoutes,
+    cartItemRoutes,
+    orderRoutes,
+    deliveryRoutes
+};
