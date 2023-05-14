@@ -5,6 +5,7 @@ const productRoutes = require('./ProductRoutes.js');
 const cartItemRoutes = require('./CartItemRoutes.js');
 const orderRoutes = require('./OrderRoutes.js');
 const deliveryRoutes = require('./DeliveryRoutes.js');
+const commentRoutes = require('./CommentRoutes.js');
 
 module.exports = {
     userRoutes,
@@ -13,5 +14,6 @@ module.exports = {
     productRoutes,
     cartItemRoutes,
     orderRoutes,
-    deliveryRoutes
+    deliveryRoutes,
+    commentRoutes
 };

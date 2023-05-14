@@ -5,6 +5,7 @@ const productRepository = require('./ProductRepository.js');
 const cartItemRepository = require('./CartItemRepository.js');
 const orderRepository = require('./OrderRepository.js');
 const deliveryRepository = require('./DeliveryRepository.js');
+const commentRepository = require('./CommentRepository.js');
 
 module.exports = {
     userRepository,
@@ -13,5 +14,6 @@ module.exports = {
     productRepository,
     cartItemRepository,
     orderRepository,
-    deliveryRepository
+    deliveryRepository,
+    commentRepository
 }

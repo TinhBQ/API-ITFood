@@ -100,7 +100,7 @@ const getProducts = async ({ userId }) => {
         let existingCartItem = await cartItemModel.find({ cartId: existingCart._id }, { _id: 0, product: 1, quantity: 1 }).populate(
             {
                 path: "product",
-                select: {_id: 0, name: 1, description: 1, price: 1, image: 1 }
+                select: {_id: 1, name: 1, description: 1, price: 1, image: 1 }
             });
 
         let result = existingCartItem.map(element => {

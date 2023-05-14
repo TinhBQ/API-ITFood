@@ -30,7 +30,8 @@ const COLLECTION = {
     CART: "Cart",
     CART: "CartItem",
     ORDER: "Order",
-    DELIVERY: "Delivery"
+    DELIVERY: "Delivery",
+    COMMENT: "Comment"
 };
 
 const DELIVERY = {

@@ -7,6 +7,7 @@ const cartItemModel = require('./CartItemModel.js');
 const orderModel = require('./OrderModel.js');
 const orderItemModel = require('./OrderItemModel.js');
 const deliveryModel = require('./DeliveryModel.js');
+const commentModel = require('./CommentModel.js');
 
 module.exports = {
     userModel,
@@ -17,5 +18,6 @@ module.exports = {
     cartItemModel,
     orderModel,
     orderItemModel,
-    deliveryModel
+    deliveryModel,
+    commentModel
 };

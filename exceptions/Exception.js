@@ -29,6 +29,9 @@ module.exports = class Exception extends Error {
     static ORDER_FAILED = 'Order failed';
     static GET_STATUS_FAILED = 'Status failed';
     static GET_DELIVER_FAILED = 'Deliver failed';
+    static ADD_COMMENT_FAILED = 'Add comment failed';
+    static UPDATE_COMMENT_FAILED = 'Update comment failed';
+    static DELETE_COMMENT_FAILED = 'Delete comment failed';
 
 
     constructor(message, validatorErrors={}) {

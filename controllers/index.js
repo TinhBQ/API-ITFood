@@ -5,6 +5,7 @@ const productController = require('./ProductController.js');
 const cartItemController = require('./CartItemController.js');
 const orderController = require('./OrderController.js');
 const deliveryController = require('./DeliveryController.js');
+const commentController = require('./CommentController.js');
 
 module.exports = {
     userController,
@@ -13,5 +14,6 @@ module.exports = {
     productController,
     cartItemController,
     orderController,
-    deliveryController
+    deliveryController,
+    commentController
 };
