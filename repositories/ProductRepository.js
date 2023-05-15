@@ -39,6 +39,17 @@ const getProducts = async ({
             },
             {
                 $limit: size // Giới hạn phần tử trong size
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    description: 1,
+                    price: 1,
+                    quantity: 1,
+                    image: 1,
+                    categoryId: 1
+                }
             }
         ]);
         if(filteredCategories) {
