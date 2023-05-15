@@ -108,9 +108,15 @@ const order = async ({
         console.log(updateQuantityProducts);
 
         updateQuantityProducts.forEach(async (element) => {
-            let updateQuantityProduct = await productModel.findById(element._id);
-            updateQuantityProduct.quantity = element.quantity ?? updateQuantityProduct.quantity;
-            await updateQuantityProduct.save();
+            let updateProduct = await productModel.findById(element._id);
+
+            let sold = updateProduct.sold;
+            let quantity = updateProduct.quantity - element.quantity;
+            sold = sold > 0 ? sold + quantity : 0 + quantity;
+
+            updateProduct.quantity = element.quantity ?? updateProduct.quantity;
+            updateProduct.sold = sold ?? updateProduct.sold;
+            await updateProduct.save();
         });
         // Update product done
 

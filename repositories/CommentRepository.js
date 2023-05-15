@@ -69,7 +69,7 @@ const getComment = async ({
 }) => {
     const existingUser = await userModel.findById(userId);
     if (!existingUser) {
-        throw new Exception(Exception.DELETE_COMMENT_FAILED);
+        throw new Exception(Exception.GET_COMMENT_FAILED);
     };
 
     let existingComment = await commentModel.find({ userId, product, commentId }, { _id: 1, userId : 1, product : 1, comment: 1 });
@@ -79,7 +79,7 @@ const getComment = async ({
             data : existingComment
         }
     } else {
-        throw new Exception(Exception.GET_ADDRESSES_FAILED);
+        throw new Exception(Exception.GET_COMMENT_FAILED);
     }
 };
 

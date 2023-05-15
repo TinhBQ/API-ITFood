@@ -16,7 +16,7 @@ const getProducts = async ({
 
         const filteredCategories = await productModel.aggregate([
             {
-                $match: { 
+                $match: {
                     $and: [
                         {
                             categoryId: existingCategory._id,
@@ -52,7 +52,7 @@ const getProducts = async ({
                 }
             }
         ]);
-        if(filteredCategories) {
+        if (filteredCategories) {
             return filteredCategories;
         } else {
             throw new Exception(Exception.GET_PRODUCTS_FAILED);
@@ -62,4 +62,23 @@ const getProducts = async ({
     }
 };
 
-module.exports = { getProducts }
+const getProductsBestseller = async ({
+
+}) => {
+    const filteredCategories = await productModel.find({}, {
+        _id: 1,
+        name: 1,
+        description: 1,
+        price: 1,
+        quantity: 1,
+        image: 1,
+        categoryId: 1
+    }).sort({sold:-1}).limit(10);
+    if (filteredCategories) {
+        return filteredCategories;
+    } else {
+        throw new Exception(Exception.GET_PRODUCTS_FAILED);
+    }
+};
+
+module.exports = { getProducts, getProductsBestseller }
