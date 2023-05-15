@@ -10,6 +10,7 @@
 ## 5. Update User
 ![image](https://user-images.githubusercontent.com/81704759/236416895-9036aba7-3f6c-43ec-95a0-ae1ce66f3553.png)
 ## 6. Upload Image
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/03abeec9-ceb5-406d-845d-0a33e120b9d4)
 ## 7. Get Addresses
 ![image](https://user-images.githubusercontent.com/81704759/236426174-e273bf18-01ca-4dab-915a-116ac2b1d698.png)
 ## 8. Add Address
