@@ -175,7 +175,7 @@ const updateFile = async (req, res) => {
     }
 
     const userId = req.body.id;
-    const imagePath = req.file.path;
+    const imagePath = req.file;
 
     try {
         let user = await userRepository.updateFile(userId, imagePath);
