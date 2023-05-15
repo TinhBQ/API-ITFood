@@ -84,8 +84,37 @@ const deleteComment = async (req, res) => {
     }
 };
 
+const getComment = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    const {
+        userId,
+        product,
+        commentId
+    } = req.body;
+
+    try {
+        const existingComment = await commentRepository.getComment({ userId, product, commentId });
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Delete comment successful',
+            ...existingComment
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
 module.exports = {
     addComment,
     updateComment,
-    deleteComment
+    deleteComment,
+    getComment
 }
