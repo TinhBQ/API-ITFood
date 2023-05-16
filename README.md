@@ -38,5 +38,23 @@
 ![image](https://user-images.githubusercontent.com/81704759/236496920-0a322f82-85a8-4b4c-9f13-33b9e20cba38.png)
 ## 19. Order Status
 ![image](https://user-images.githubusercontent.com/81704759/236497483-e33f179a-06ec-449c-9abf-e650953a0582.png)
+## 20. Get Deliveries
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/f9081302-9122-4369-ad9d-3e3694c56f15)
+## 21. Add Comment
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/70a3cfee-be72-49a4-8205-992ee7ab296f)
+## 22. Add Comment (Feedback Comment)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/fdd0c176-0706-426b-b96c-1fbe265abb2b)
+## 23. Update Comment
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/1fd52147-920d-439a-9144-8848e72e9f3e)
+## 24. Delete Comment
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/3d87f1da-22fe-479a-937f-16a676ea9939)
+## 25. Get Comment
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/d378f33f-3d8a-4bd1-9700-fca3ffb704c3)
+## 26. Get Comment (Feedback Comment)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7b9a328f-c0df-434d-a302-622fbc5879ba)
+## 27. Get Products (best-seller)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/9d34a18a-95bf-4c13-9f83-0121337cd2e6)
+
+
 
 
