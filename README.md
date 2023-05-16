@@ -54,6 +54,9 @@ v![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7edf5b97-3485-4d2
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b13d2f84-764f-487b-b7e7-3f5c4efcaf32)
 ## 27. Get Products (best-seller)
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/9d34a18a-95bf-4c13-9f83-0121337cd2e6)
+## 28. Add product
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b09dac7f-dee5-4ee3-bd09-7deee52d1072)
+
 
 
 
