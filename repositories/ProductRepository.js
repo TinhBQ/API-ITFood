@@ -85,15 +85,15 @@ const getProductsBestseller = async ({
 const addProduct = async (userId, name, description, price, quantity, categoryId, image) => {
     let existingUser = await userModel.findById(userId);
     if (!existingUser) {
-        throw new Exception(Exception.ADD_PRODUCT_FAILER);
+        throw new Exception(Exception.ADD_PRODUCT_FAILED);
     }
 
     let existingCategory = await categoryModel.findById(categoryId);
     if (!existingCategory) {
-        throw new Exception(Exception.ADD_PRODUCT_FAILER);
+        throw new Exception(Exception.ADD_PRODUCT_FAILED);
     }
 
-    
+
     const bucket = admin.storage().bucket();
 
     const fileExtension = image.originalname.split('.').pop();
@@ -119,21 +119,87 @@ const addProduct = async (userId, name, description, price, quantity, categoryId
         name,
         description,
         price,
+        quantity,
         categoryId: existingCategory._id,
         image: imageUrl
     });
 
     if (!existingProduct) {
-        throw new Exception(Exception.ADD_PRODUCT_FAILER);
+        throw new Exception(Exception.ADD_PRODUCT_FAILED);
     }
     return {
         id: existingProduct._id,
-        name,
-        description,
-        price,
-        image: imageUrl,
-        categoryId
+        name: existingProduct.name,
+        description: existingProduct.description,
+        price: existingProduct.price,
+        quantity: existingProduct.quantity,
+        image: existingProduct.image,
+        categoryId: existingProduct.categoryId
     }
 }
 
-module.exports = { getProducts, getProductsBestseller, addProduct }
+const updateProduct = async (userId, productId, name, description, price, quantity, image) => {
+    let existingUser = await userModel.findById(userId);
+    if (!existingUser) {
+        throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
+    }
+
+    const existingProduct = await productModel.findById(productId);
+    if (!existingProduct) {
+        throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
+    }
+
+
+    let imageUrl;
+    if (image) {
+        const bucket = admin.storage().bucket();
+
+        const fileExtension = image.originalname.split('.').pop();
+        const fileName = `${Date.now()}.${fileExtension}`;
+        const file = bucket.file(fileName);
+        const options = {
+            destination: file,
+            metadata: {
+                contentType: image.mimetype,
+            },
+        };
+        await bucket.upload(image.path, options);
+        await file.makePublic();
+        imageUrl = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+        existingProduct.image = imageUrl ?? existingProduct.image;
+    }
+
+    existingProduct.name = name ?? existingProduct.name;
+    existingProduct.description = description ?? existingProduct.description;
+    existingProduct.price = price ?? existingProduct.price;
+    existingProduct.quantity = quantity ?? existingProduct.quantity;
+    existingProduct.name = name ?? existingProduct.name;
+
+    await existingProduct.save();
+
+    return {
+        id: existingProduct._id,
+        name: existingProduct.name,
+        description: existingProduct.description,
+        price: existingProduct.price,
+        quantity: existingProduct.quantity,
+        image: existingProduct.image
+    }
+};
+
+const deleteProduct = async ({
+    userId,
+    productId
+}) => {
+    let existingUser = await userModel.findById(userId);
+    if (!existingUser) {
+        throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
+    }
+    
+    let existingProduct = await productModel.deleteOne({_id: productId});
+    if (!existingProduct) {
+        throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
+    }
+};
+
+module.exports = { getProducts, getProductsBestseller, addProduct, updateProduct, deleteProduct }

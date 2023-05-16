@@ -72,12 +72,12 @@ const addProduct = async (req, res) => {
     const image = req.file;
 
     try {
-        let user = await productRepository.addProduct(userId, name, description, price, quantity, categoryId, image);
+        let existingProduct = await productRepository.addProduct(userId, name, description, price, quantity, categoryId, image);
 
-        res.status(HttpStatusCode.OK).json({
+        res.status(HttpStatusCode.INSERT_OK).json({
             status: STATUS.SUCCESS,
             message: 'Add product successful',
-            result: user
+            result: existingProduct
         });
     } catch (exception) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
@@ -88,4 +88,60 @@ const addProduct = async (req, res) => {
 
 };
 
-module.exports = { getProducts, getProductsBestseller, addProduct };
+const updateProduct = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    const userId = req.body.userId;
+    const productId = req.body.productId;
+    const name = req.body.name;
+    const description = req.body.description;
+    const price = req.body.price;
+    const quantity = req.body.quantity;
+    const image = req.file;
+
+    try {
+        let existingProduct = await productRepository.updateProduct(userId, productId, name,  description, price, quantity, image);
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Update product successful',
+            result: existingProduct
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
+const deleteProduct = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+  
+    const {
+        userId,
+        productId
+    } = req.body;
+
+    try {
+        await productRepository.deleteProduct({userId, productId});
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Delete product successful'
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
+module.exports = { getProducts, getProductsBestseller, addProduct, updateProduct, deleteProduct };

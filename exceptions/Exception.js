@@ -33,7 +33,8 @@ module.exports = class Exception extends Error {
     static UPDATE_COMMENT_FAILED = 'Update comment failed';
     static DELETE_COMMENT_FAILED = 'Delete comment failed';
     static GET_COMMENT_FAILED = 'Get comment failed';
-    static ADD_PRODUCT_FAILER = 'Add product failed';
+    static ADD_PRODUCT_FAILED = 'Add product failed';
+    static UPDATE_PRODUCT_FAILED = 'Update product failed';
 
     constructor(message, validatorErrors={}) {
         super(message); // call constructor of parent class(Error)
