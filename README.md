@@ -24,7 +24,7 @@
 ## 12. Get Products
 ![image](https://user-images.githubusercontent.com/81704759/236491273-34c95a17-948a-4461-865c-144675042f08.png)
 ## 13. Add product item to cart
-![image](https://user-images.githubusercontent.com/81704759/236492317-57385628-0316-4500-bd3b-30f26aecad9e.png)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/1a8c1115-fd4d-4e58-9b42-76fdf5a8c038)
 ## 14. Update product item in cart
 ![image](https://user-images.githubusercontent.com/81704759/236493009-4f1d986e-ef85-44ca-b1c8-0f12cbb6eb13.png)
 ## 15. Delete product item in cart
