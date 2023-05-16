@@ -259,5 +259,16 @@ const updateFile = async (userId, imagePath) => {
     }
 }
 
+const getUser = async ({
+    userId
+}) => {
+    let existingUser = await userModel.findById(userId);
+    if (!existingUser) {
+        throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
+    }
 
-module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile };
+    existingUser = await userModel.findById({}, {id: 1, phoneNumber: 1, password: 1, email: 1, gender: 1, avatar: 1});
+    return existingUser
+};
+
+module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile, getUser };

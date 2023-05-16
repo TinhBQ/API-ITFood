@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connect = require('./database/database.js')
-const { categoryModel, productModel, deliveryModel } = require('./models/index.js')
+const { categoryModel, productModel, deliveryModel, userModel } = require('./models/index.js')
 const { OutputType, print } = require('./helpers/print.js');
 
 const app = express();
@@ -9,6 +9,25 @@ app.use(express.json())
 dotenv.config();
 
 connect()
+  .then(async () => {
+    const myUserManager = [
+      {
+        "phoneNumber": "0987654321",
+        "password": "Admin123",
+        "name": "admin",
+        "email": "admin@gmail.com",
+        "gender": "Nam",
+        "role": "MANAGER"
+      }
+    ];
+
+    let isExistUser = await userModel.insertMany(myUserManager);
+    if (isExistUser) {
+      print('Init User Manager successfully', OutputType.SUCCESS);
+    } else {
+      print('Init User Manager failed', OutputType.ERROR);
+    }
+  })
   .then(async () => {
     const myDelivery = [
       {

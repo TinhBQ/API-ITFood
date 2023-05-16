@@ -11,5 +11,6 @@ router.patch('/forgot-password', userController.forgotPassword);
 router.patch('/reset-password', userController.resetPassword);
 router.patch('/update-user', userController.updateUser);
 router.post('/upload-file', upload.single('avatar'), userController.updateFile);
+router.get('/', userController.getUser);
 
 module.exports = router;

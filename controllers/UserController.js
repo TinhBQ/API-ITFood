@@ -191,8 +191,30 @@ const updateFile = async (req, res) => {
             message: `${exception.message}`
         });
     }
+};
 
+const getUser = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    let { userId } = req.query;
+    try {
+        let user = await userRepository.getUser({userId});
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Get Users successful',
+            result: user
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
 
 };
 
-module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile };
+module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile, getUser };
