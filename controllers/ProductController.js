@@ -76,8 +76,8 @@ const addProduct = async (req, res) => {
 
         res.status(HttpStatusCode.OK).json({
             status: STATUS.SUCCESS,
-            message: 'Update image successful',
-            data: user
+            message: 'Add product successful',
+            result: user
         });
     } catch (exception) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({

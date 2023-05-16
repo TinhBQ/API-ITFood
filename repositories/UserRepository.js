@@ -5,12 +5,11 @@ const jwt = require('jsonwebtoken');
 const { URL } = require('../global/constants.js');
 
 const admin = require('firebase-admin');
-const serviceAccount = require('../path/to/serviceAccountKey.json');
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: "itfood-e43fe.appspot.com",
-});
-const bucket = admin.storage().bucket();
+// const serviceAccount = require('../path/to/serviceAccountKey.json');
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+//     storageBucket: "itfood-e43fe.appspot.com",
+// });
 
 const register = async ({
     phoneNumber,
@@ -217,6 +216,8 @@ const updateFile = async (userId, imagePath) => {
     let existingUser = await userModel.findById(userId);
     if (!!existingUser) {
         if (imagePath) {
+            const bucket = admin.storage().bucket();
+            
             const fileExtension = imagePath.originalname.split('.').pop();
             const fileName = `${Date.now()}.${fileExtension}`;
             const file = bucket.file(fileName);

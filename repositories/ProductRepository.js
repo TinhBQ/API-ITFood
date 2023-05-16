@@ -1,5 +1,6 @@
-const { productModel, categoryModel } = require('../models/index.js');
+const { productModel, categoryModel, userModel } = require('../models/index.js');
 const Exception = require('../exceptions/Exception.js');
+const admin = require('firebase-admin');
 
 const getProducts = async ({
     categoryId,
@@ -73,7 +74,7 @@ const getProductsBestseller = async ({
         quantity: 1,
         image: 1,
         categoryId: 1
-    }).sort({sold:-1}).limit(10);
+    }).sort({ sold: -1 }).limit(10);
     if (filteredCategories) {
         return filteredCategories;
     } else {
@@ -81,20 +82,58 @@ const getProductsBestseller = async ({
     }
 };
 
-const addProduct =  async (userId, name, description, price, quantity, categoryId, image) => {
+const addProduct = async (userId, name, description, price, quantity, categoryId, image) => {
     let existingUser = await userModel.findById(userId);
     if (!existingUser) {
-        throw new Exception(Exception.GET_DELIVER_FAILED);
+        throw new Exception(Exception.ADD_PRODUCT_FAILER);
     }
-    
+
     let existingCategory = await categoryModel.findById(categoryId);
     if (!existingCategory) {
-        throw new Exception(Exception.GET_DELIVER_FAILED);
+        throw new Exception(Exception.ADD_PRODUCT_FAILER);
     }
 
     
+    const bucket = admin.storage().bucket();
+
+    const fileExtension = image.originalname.split('.').pop();
+    const fileName = `${Date.now()}.${fileExtension}`;
+    const file = bucket.file(fileName);
+    const options = {
+        destination: file,
+        metadata: {
+            contentType: image.mimetype,
+        },
+    };
+    console.log('1')
+    await bucket.upload(image.path, options);
+    console.log('2')
+    await file.makePublic();
+    console.log('3')
 
 
+    const imageUrl = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+    console.log(imageUrl)
+
+    let existingProduct = await productModel.create({
+        name,
+        description,
+        price,
+        categoryId: existingCategory._id,
+        image: imageUrl
+    });
+
+    if (!existingProduct) {
+        throw new Exception(Exception.ADD_PRODUCT_FAILER);
+    }
+    return {
+        id: existingProduct._id,
+        name,
+        description,
+        price,
+        image: imageUrl,
+        categoryId
+    }
 }
 
 module.exports = { getProducts, getProductsBestseller, addProduct }
