@@ -11,7 +11,7 @@ const getDeliveries = async (req, res) => {
 
     const {
         userId
-    } = req.params;
+    } = req.query;
 
     try {
         const existingDelivery = await deliveryRepository.getDeliveries({userId});

@@ -94,7 +94,7 @@ const getComment = async (req, res) => {
         userId,
         product,
         commentId
-    } = req.params;
+    } = req.query;
 
     try {
         const existingComment = await commentRepository.getComment({ userId, product, commentId });
