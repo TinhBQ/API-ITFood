@@ -12,7 +12,7 @@
 ## 6. Upload Image
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/03abeec9-ceb5-406d-845d-0a33e120b9d4)
 ## 7. Get Addresses
-![image](https://user-images.githubusercontent.com/81704759/236426174-e273bf18-01ca-4dab-915a-116ac2b1d698.png)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/74ee09a0-bbe6-42f6-81a6-ee9a4b0aedb2)
 ## 8. Add Address
 ![image](https://user-images.githubusercontent.com/81704759/236426478-04ffd512-8049-4fb6-83ee-25595f3ff678.png)
 ## 9. Update Address
@@ -30,7 +30,7 @@
 ## 15. Delete product item in cart
 ![image](https://user-images.githubusercontent.com/81704759/236493385-ef678e2f-fa0c-459e-9d05-cba9cffa5ce2.png)
 ## 16. Get prduct items in cart
-![image](https://user-images.githubusercontent.com/81704759/236494401-34305680-933d-4832-a34e-4387119da5a0.png)
+v![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7edf5b97-3485-4d2e-9e25-1e19e290ffe2)
 ## 17. Total price of products in cart
 ![image](https://user-images.githubusercontent.com/81704759/236495193-cb6156d9-d01b-4a98-a8aa-d2b1691c0d32.png)
 ![image](https://user-images.githubusercontent.com/81704759/236495609-ba8671b4-aa1a-4d2e-87e8-c1ee0215f896.png)
