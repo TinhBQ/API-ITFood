@@ -32,12 +32,12 @@
 ## 16. Get prduct items in cart
 v![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7edf5b97-3485-4d2e-9e25-1e19e290ffe2)
 ## 17. Total price of products in cart
-![image](https://user-images.githubusercontent.com/81704759/236495193-cb6156d9-d01b-4a98-a8aa-d2b1691c0d32.png)
-![image](https://user-images.githubusercontent.com/81704759/236495609-ba8671b4-aa1a-4d2e-87e8-c1ee0215f896.png)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/945d578d-3f70-4b1f-8c57-a122ebc6e946)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/24b1f87f-6cc2-4f88-8896-5734cad82761)
 ## 18. Order products in cart
 ![image](https://user-images.githubusercontent.com/81704759/236496920-0a322f82-85a8-4b4c-9f13-33b9e20cba38.png)
 ## 19. Order Status
-![image](https://user-images.githubusercontent.com/81704759/236497483-e33f179a-06ec-449c-9abf-e650953a0582.png)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/af7bee4e-9659-48da-b8eb-1f63147dbf34)
 ## 20. Get Deliveries
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/f9081302-9122-4369-ad9d-3e3694c56f15)
 ## 21. Add Comment
@@ -49,9 +49,9 @@ v![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7edf5b97-3485-4d2
 ## 24. Delete Comment
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/3d87f1da-22fe-479a-937f-16a676ea9939)
 ## 25. Get Comment
-![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/d378f33f-3d8a-4bd1-9700-fca3ffb704c3)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/5ce44e61-84f2-491e-841b-13f7df2e6025)
 ## 26. Get Comment (Feedback Comment)
-![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7b9a328f-c0df-434d-a302-622fbc5879ba)
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b13d2f84-764f-487b-b7e7-3f5c4efcaf32)
 ## 27. Get Products (best-seller)
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/9d34a18a-95bf-4c13-9f83-0121337cd2e6)
 
