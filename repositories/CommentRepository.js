@@ -59,7 +59,7 @@ const deleteComment = async ({
     };
     
     await commentModel.deleteOne({_id: commentId});
-    await commentModel.deleteOne({commentId});
+    await commentModel.deleteMany({commentId});
 };
 
 const getComment = async ({
