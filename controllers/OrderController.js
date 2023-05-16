@@ -42,7 +42,7 @@ const totalPrice = async (req, res) => {
     const {
         userId,
         delivery
-    } = req.body;
+    } = req.params;
 
     try {
         let totoalPrice = await orderRepository.totalPrice({ userId, delivery });
@@ -68,7 +68,7 @@ const status = async (req, res) => {
 
     const {
         userId
-    } = req.body;
+    } = req.params;
 
     try {
         let existingStatus = await orderRepository.status({ userId });

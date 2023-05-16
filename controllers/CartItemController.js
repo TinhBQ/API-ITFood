@@ -90,7 +90,7 @@ const getProducts = async (req, res) => {
 
     const {
         userId
-    } = req.body;
+    } = req.query;
 
     try {
         let existingCartItem = await cartItemRepository.getProducts({ userId });

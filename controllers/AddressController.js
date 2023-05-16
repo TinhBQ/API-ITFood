@@ -11,7 +11,7 @@ const getAddresses = async (req, res) => {
 
     const {
         userId
-    } = req.body;
+    } = req.params;
 
     try {
         let addresses = await addressRepository.getAddresses({userId});

@@ -81,4 +81,20 @@ const getProductsBestseller = async ({
     }
 };
 
-module.exports = { getProducts, getProductsBestseller }
+const addProduct =  async (userId, name, description, price, quantity, categoryId, image) => {
+    let existingUser = await userModel.findById(userId);
+    if (!existingUser) {
+        throw new Exception(Exception.GET_DELIVER_FAILED);
+    }
+    
+    let existingCategory = await categoryModel.findById(categoryId);
+    if (!existingCategory) {
+        throw new Exception(Exception.GET_DELIVER_FAILED);
+    }
+
+    
+
+
+}
+
+module.exports = { getProducts, getProductsBestseller, addProduct }
