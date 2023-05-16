@@ -11,11 +11,12 @@ const addProduct = async (req, res) => {
 
     const {
         userId,
-        productId
+        productId,
+        quantity
     } = req.body;
 
     try {
-        await cartItemRepository.addProduct({ userId, productId });
+        await cartItemRepository.addProduct({ userId, productId, quantity });
 
         res.status(HttpStatusCode.INSERT_OK).json({
             status: STATUS.SUCCESS,

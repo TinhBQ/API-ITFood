@@ -3,7 +3,8 @@ const Exception = require('../exceptions/Exception.js');
 
 const addProduct = async ({
     userId,
-    productId
+    productId,
+    quantity
 }) => {
     let existingUser = await userModel.findById(userId);
     if (!!existingUser) {
@@ -22,10 +23,12 @@ const addProduct = async ({
             throw new Exception(Exception.PRODUCT_ALREADY_EXISTS_IN_CART);
         }
 
+        quantity = quantity > 0 ? quantity : 1;
+
         await cartItemModel.create({
             cartId: existingCart._id,
             product: existingProduct._id,
-            quantity: 1
+            quantity: quantity
         });
     } else {
         throw new Exception(Exception.ADD_PRODUCT_TO_CART_FAILED);
