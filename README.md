@@ -54,8 +54,19 @@ v![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7edf5b97-3485-4d2
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b13d2f84-764f-487b-b7e7-3f5c4efcaf32)
 ## 27. Get Products (best-seller)
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/9d34a18a-95bf-4c13-9f83-0121337cd2e6)
-## 28. Add product
-![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b09dac7f-dee5-4ee3-bd09-7deee52d1072)
+## 28. Add Category
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/5ea123cc-c199-4253-b8a1-413a408a8447)
+## 29. Updare Category
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/59138a12-737e-4135-8174-8bc9cbfee227)
+## 30. Delete Category
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/f5a33d8d-26e6-483e-aee0-129cc41528e7)
+## 31. Add Product
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/65e267fa-271c-431b-857a-c5366711a1f9)
+## 32. Update Product
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/4b9bb2ca-3958-4bc2-929c-dee8d0d9a523)
+## 33. Delete Product
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b9068ae9-7f76-4fec-8e99-291268fee50d)
+
 
 
 
