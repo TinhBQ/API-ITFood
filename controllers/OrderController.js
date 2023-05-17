@@ -2,6 +2,7 @@ const { orderRepository } = require('../repositories/index.js');
 const { validationResult } = require('express-validator');
 const HttpStatusCode = require('../exceptions/HttpStatusCode.js');
 const { STATUS } = require('../global/constants.js');
+const moment = require('moment');
 
 const order = async (req, res) => {
     const errors = validationResult(req);
@@ -138,10 +139,37 @@ const totalPricePricesDay = async (req, res) => {
     }
 };
 
+const totalOrdersDaySeries = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    const userId = req.query.userId;
+    const startDay = moment(req.query.startDay, 'DD/MM/YYYY');
+    const endDay = moment(req.query.endDay, 'dDD/MM/YYYY');
+
+    try {
+        let existingStatus = await orderRepository.totalOrdersDaySeries(userId, startDay, endDay);
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Get total prices for the day successfully',
+            ...existingStatus
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
 module.exports = {
     order,
     totalPrice,
     status,
     totalOrdersDay,
-    totalPricePricesDay
+    totalPricePricesDay,
+    totalOrdersDaySeries
 }

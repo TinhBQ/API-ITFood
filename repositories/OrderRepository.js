@@ -1,5 +1,8 @@
 const { database } = require('firebase-admin');
 const Exception = require('../exceptions/Exception.js');
+const moment = require('moment-timezone');
+const { parse, format } = require('date-fns');
+const utcToZonedTime = require('date-fns-tz').utcToZonedTime;
 const {
     orderModel,
     orderItemModel,
@@ -24,14 +27,14 @@ const order = async ({
         let existingCartItem = await cartItemModel.findOne({ cartId: existingCart._id });
         if (!existingCartItem) {
             throw new Exception(Exception.ORDER_FAILED);
-        } 
+        }
 
         // Get Price
         existingCartItem = await cartItemModel.find({ cartId: existingCart._id }, { _id: 0, product: 1, quantity: 1 }).populate(
             {
                 path: "product",
                 select: { _id: 0, price: 1 }
-            });       
+            });
 
         if (!existingCartItem) {
             throw new Exception(Exception.ORDER_FAILED);
@@ -203,9 +206,9 @@ const totalOrdersDay = async ({
     console.log(startOfDay)
 
     const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999); 
+    endOfDay.setHours(23, 59, 59, 999);
 
-    let existingOrder = await orderModel.find({createdAt: { $gte: startOfDay, $lte: endOfDay } }, { _id: 1 });
+    let existingOrder = await orderModel.find({ createdAt: { $gte: startOfDay, $lte: endOfDay } }, { _id: 1 });
     console.log(existingOrder);
 
     let totalOrdersDay = !existingOrder ? 0 : existingOrder.reduce((partialSum) => partialSum + 1, 0);
@@ -224,13 +227,14 @@ const totalPricePricesDay = async ({
     }
 
     const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0); // Đặt giờ, phút, giây, mili giây về 0
+     // Đặt giờ, phút, giây, mili giây về 0
     console.log(startOfDay)
 
     const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999); 
+    endOfDay.setHours(23, 59, 59, 999);
+    console.log(endOfDay)
 
-    let existingOrder = await orderModel.find({createdAt: { $gte: startOfDay, $lte: endOfDay } }, { _id: 0, totalPrice: 1 });
+    let existingOrder = await orderModel.find({ createdAt: { $gte: startOfDay, $lte: endOfDay } }, { _id: 0, totalPrice: 1 });
     console.log(existingOrder);
 
     let totalPricesDay = !existingOrder ? 0 : existingOrder.reduce((partialSum, element) => partialSum + element.totalPrice, 0);
@@ -240,10 +244,42 @@ const totalPricePricesDay = async ({
     }
 };
 
+const totalOrdersDaySeries = async (userId, startDay, endDay) => {
+    let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
+    if (!existingUser) {
+        throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
+    }
+
+    console.log(startDay);
+    console.log(endDay);
+
+    
+    const formatStr = 'DD/MM/YYYY';
+
+    const dateStart = moment.utc(startDay, formatStr).toISOString();
+    console.log(dateStart); // 2023-04-10T17:00:00.000Z
+    const dateEnd = moment.utc(endDay, formatStr).toISOString();
+    console.log(dateEnd); // 2023-04-10T17:00:00.000Z
+
+    
+
+
+
+    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: dateEnd } }, { _id: 1 });
+    console.log(existingOrder);
+
+    let totalOrdersDaySeries = !existingOrder ? 0 : existingOrder.reduce((partialSum) => partialSum + 1, 0);
+    console.log(totalOrdersDaySeries);
+    return {
+        result: totalOrdersDaySeries
+    }
+}
+
 module.exports = {
     order,
     totalPrice,
     status,
     totalOrdersDay,
-    totalPricePricesDay
+    totalPricePricesDay,
+    totalOrdersDaySeries
 }
