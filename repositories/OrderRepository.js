@@ -215,9 +215,35 @@ const totalOrdersDay = async ({
     }
 };
 
+const totalPricePricesDay = async ({
+    userId
+}) => {
+    let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
+    if (!existingUser) {
+        throw new Exception(Exception.GET_TOTAL_PRICES_FAILED);
+    }
+
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0); // Đặt giờ, phút, giây, mili giây về 0
+    console.log(startOfDay)
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999); 
+
+    let existingOrder = await orderModel.find({createdAt: { $gte: startOfDay, $lte: endOfDay } }, { _id: 0, totalPrice: 1 });
+    console.log(existingOrder);
+
+    let totalPricesDay = !existingOrder ? 0 : existingOrder.reduce((partialSum, element) => partialSum + element.totalPrice, 0);
+    console.log(totalPricesDay);
+    return {
+        result: totalPricesDay
+    }
+};
+
 module.exports = {
     order,
     totalPrice,
     status,
-    totalOrdersDay
+    totalOrdersDay,
+    totalPricePricesDay
 }

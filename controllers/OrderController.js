@@ -112,9 +112,36 @@ const totalOrdersDay = async (req, res) => {
     }
 };
 
+const totalPricePricesDay = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    const {
+        userId
+    } = req.query;
+
+    try {
+        let existingStatus = await orderRepository.totalPricePricesDay({ userId });
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Get total prices for the day successfully',
+            ...existingStatus
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
 module.exports = {
     order,
     totalPrice,
     status,
-    totalOrdersDay
+    totalOrdersDay,
+    totalPricePricesDay
 }
