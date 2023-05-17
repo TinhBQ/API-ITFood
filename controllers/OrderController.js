@@ -102,7 +102,7 @@ const totalOrdersDay = async (req, res) => {
         res.status(HttpStatusCode.OK).json({
             status: STATUS.SUCCESS,
             message: 'Get total orders for the day successfully',
-            results: existingStatus
+            ...existingStatus
         });
     } catch (exception) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({

@@ -195,7 +195,7 @@ const totalOrdersDay = async ({
 }) => {
     let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
     if (!existingUser) {
-        throw new Exception(Exception.GET_STATUS_FAILED);
+        throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
     }
 
     const startOfDay = new Date();
@@ -210,6 +210,9 @@ const totalOrdersDay = async ({
 
     let totalOrdersDay = !existingOrder ? 0 : existingOrder.reduce((partialSum) => partialSum + 1, 0);
     console.log(totalOrdersDay);
+    return {
+        result: totalOrdersDay
+    }
 };
 
 module.exports = {
