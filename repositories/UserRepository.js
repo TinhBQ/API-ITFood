@@ -282,7 +282,7 @@ const getUser = async ({ userId }) => {
 const getUserByPhoneNumber = async ({
     phoneNumber
 }) => {
-    let existingUser = await userModel.findOne({ phoneNumber: phoneNumber });
+    let existingUser = await userModel.findOne({ phoneNumber: phoneNumber, role: CLIENT });
     if (!existingUser) {
         throw new Exception(Exception.GET_USER_BY_PHONE_NUMBER_FAILED);
     }
