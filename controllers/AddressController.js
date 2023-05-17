@@ -93,7 +93,7 @@ const deleteAddress = async (req, res) => {
     const {
         id,
         userId,
-    } = req.body;
+    } = req.query;
 
     try {
         let addresses = await addressRepository.deleteAddress({id, userId});
