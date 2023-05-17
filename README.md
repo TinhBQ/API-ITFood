@@ -66,6 +66,9 @@ v![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7edf5b97-3485-4d2
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/4b9bb2ca-3958-4bc2-929c-dee8d0d9a523)
 ## 33. Delete Product
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b9068ae9-7f76-4fec-8e99-291268fee50d)
+## 34. Get User By PhoneNumber
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/d4fe88ca-6e2e-4306-a7bc-6f73c67aa21a)
+
 
 
 
