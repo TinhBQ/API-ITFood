@@ -91,8 +91,7 @@ const forgotPassword = async (req, res) => {
 
         res.status(HttpStatusCode.OK).json({
             status: STATUS.SUCCESS,
-            message: 'Password update successful',
-            result: user
+            message: 'Password update successful'
         });
     } catch (exception) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
@@ -215,7 +214,39 @@ const getUser = async (req, res) => {
             message: `${exception.message}`
         });
     }
-
 };
 
-module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile, getUser };
+const getUserByPhoneNumber = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    let { phoneNumber } = req.query;
+
+    try {
+        let user = await userRepository.getUserByPhoneNumber({phoneNumber});
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Get Users by PhoneNumber successful',
+            result: user
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
+module.exports = { 
+    register, 
+    login, 
+    forgotPassword, 
+    resetPassword, 
+    updateUser, 
+    updateFile, 
+    getUser,
+    getUserByPhoneNumber
+};

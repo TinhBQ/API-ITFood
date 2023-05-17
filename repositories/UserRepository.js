@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const { URL } = require('../global/constants.js');
 
 const admin = require('firebase-admin');
+const UserModel = require('../models/UserModel.js');
 // const serviceAccount = require('../path/to/serviceAccountKey.json');
 // admin.initializeApp({
 //     credential: admin.credential.cert(serviceAccount),
@@ -123,7 +124,7 @@ const forgotPassword = async ({
                     gender: existingUser.gender,
                     avatar: existingUser.avatar
                 }
-                   
+
             } else {
                 throw new Exception(Exception.ERROR_PASSWORD);
             }
@@ -225,7 +226,7 @@ const updateFile = async (userId, imagePath) => {
     if (!!existingUser) {
         if (imagePath) {
             const bucket = admin.storage().bucket();
-            
+
             const fileExtension = imagePath.originalname.split('.').pop();
             const fileName = `${Date.now()}.${fileExtension}`;
             const file = bucket.file(fileName);
@@ -267,15 +268,45 @@ const updateFile = async (userId, imagePath) => {
     }
 }
 
-const getUser = async ({userId}) => {
+const getUser = async ({ userId }) => {
     let existingUser = await userModel.findById(userId);
     if (!existingUser) {
         throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
     }
 
-    existingUser = await userModel.find({role: 'CLIENT'}, {_id: 1, phoneNumber: 1, password: 1, email: 1, gender: 1, avatar: 1});
+    existingUser = await userModel.find({ role: 'CLIENT' }, { _id: 1, phoneNumber: 1, password: 1, email: 1, gender: 1, avatar: 1 });
 
     return existingUser;
 };
 
-module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile, getUser };
+const getUserByPhoneNumber = async ({
+    phoneNumber
+}) => {
+    let existingUser = await userModel.findOne({ phoneNumber: phoneNumber });
+    if (!existingUser) {
+        throw new Exception(Exception.GET_USER_BY_PHONE_NUMBER_FAILED);
+    }
+
+    const addresses = await addressModel.find({ userId: existingUser._id });
+
+    return {
+        id: existingUser._id,
+        phoneNumber: existingUser.phoneNumber,
+        name: existingUser.name,
+        email: existingUser.email,
+        gender: existingUser.gender,
+        avatar: existingUser.avatar,
+        address: addresses[0].address,
+    }
+};
+
+module.exports = {
+    register,
+    login,
+    forgotPassword,
+    resetPassword,
+    updateUser,
+    updateFile,
+    getUser,
+    getUserByPhoneNumber
+};
