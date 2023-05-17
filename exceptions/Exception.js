@@ -39,6 +39,7 @@ module.exports = class Exception extends Error {
     static UPDATE_CATEGORY_FAILED = 'Update category failed';
     static DELETE_CATEGORY_FAILED = 'Delete category failed';
     static GET_USER_BY_PHONE_NUMBER_FAILED = 'Get user by Phone Number failed';
+    static GET_USER_FAILER = 'Get user failed';
 
     constructor(message, validatorErrors={}) {
         super(message); // call constructor of parent class(Error)

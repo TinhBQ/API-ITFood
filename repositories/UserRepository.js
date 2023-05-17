@@ -271,7 +271,7 @@ const updateFile = async (userId, imagePath) => {
 const getUser = async ({ userId }) => {
     let existingUser = await userModel.findById(userId);
     if (!existingUser) {
-        throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
+        throw new Exception(Exception.GET_USER_FAILER);
     }
 
     existingUser = await userModel.find({ role: 'CLIENT' }, { _id: 1, phoneNumber: 1, password: 1, email: 1, gender: 1, avatar: 1 });
@@ -282,7 +282,7 @@ const getUser = async ({ userId }) => {
 const getUserByPhoneNumber = async ({
     phoneNumber
 }) => {
-    let existingUser = await userModel.findOne({ phoneNumber: phoneNumber, role: CLIENT });
+    let existingUser = await userModel.findOne({ phoneNumber: phoneNumber, role: 'CLIENT' });
     if (!existingUser) {
         throw new Exception(Exception.GET_USER_BY_PHONE_NUMBER_FAILED);
     }
