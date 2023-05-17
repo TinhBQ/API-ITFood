@@ -9,5 +9,6 @@ router.get('/status', orderController.status);
 router.get('/total-orders-day', orderController.totalOrdersDay);
 router.get('/total-prices-day', orderController.totalPricePricesDay);
 router.get('/total-orders-day-series', orderController.totalOrdersDaySeries);
+router.get('/total-prices-day-series', orderController.totalPricesDaySeries);
 
 module.exports = router;

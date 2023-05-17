@@ -260,12 +260,13 @@ const totalOrdersDaySeries = async (userId, startDay, endDay) => {
     console.log(dateStart); // 2023-04-10T17:00:00.000Z
     const dateEnd = moment.utc(endDay, formatStr).toISOString();
     console.log(dateEnd); // 2023-04-10T17:00:00.000Z
+    const originalDate = moment(dateEnd);
+    const newDate = originalDate.add(1, 'day');
 
-    
+    console.log(newDate); // 2023-04-10T17:
 
 
-
-    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: dateEnd } }, { _id: 1 });
+    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: newDate } }, { _id: 1 });
     console.log(existingOrder);
 
     let totalOrdersDaySeries = !existingOrder ? 0 : existingOrder.reduce((partialSum) => partialSum + 1, 0);
@@ -275,11 +276,44 @@ const totalOrdersDaySeries = async (userId, startDay, endDay) => {
     }
 }
 
+const totalPricesDaySeries = async (userId, startDay, endDay) => {
+    let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
+    if (!existingUser) {
+        throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
+    }
+
+    console.log(startDay);
+    console.log(endDay);
+
+    
+    const formatStr = 'DD/MM/YYYY';
+
+    const dateStart = moment.utc(startDay, formatStr).toISOString();
+    console.log(dateStart); // 2023-04-10T17:00:00.000Z
+    const dateEnd = moment.utc(endDay, formatStr).toISOString();
+    console.log(dateEnd); // 2023-04-10T17:00:00.000Z
+    const originalDate = moment(dateEnd);
+    const newDate = originalDate.add(1, 'day');
+
+    console.log(newDate); // 2023-04-10T17:
+
+
+    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: newDate } }, { _id: 0, totalPrice: 1 });
+    console.log(existingOrder);
+
+    let totalPricesDay = !existingOrder ? 0 : existingOrder.reduce((partialSum, element) => partialSum + element.totalPrice, 0);
+    console.log(totalPricesDay);
+    return {
+        result: totalPricesDay
+    }
+}
+
 module.exports = {
     order,
     totalPrice,
     status,
     totalOrdersDay,
     totalPricePricesDay,
-    totalOrdersDaySeries
+    totalOrdersDaySeries,
+    totalPricesDaySeries
 }
