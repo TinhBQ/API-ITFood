@@ -10,25 +10,6 @@ dotenv.config();
 
 connect()
   .then(async () => {
-    const myUserManager = [
-      {
-        "phoneNumber": "0987654321",
-        "password": "Admin123",
-        "name": "admin",
-        "email": "admin@gmail.com",
-        "gender": "Nam",
-        "role": "MANAGER"
-      }
-    ];
-
-    let isExistUser = await userModel.insertMany(myUserManager);
-    if (isExistUser) {
-      print('Init User Manager successfully', OutputType.SUCCESS);
-    } else {
-      print('Init User Manager failed', OutputType.ERROR);
-    }
-  })
-  .then(async () => {
     const myDelivery = [
       {
         "name": "Express",

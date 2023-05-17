@@ -115,7 +115,15 @@ const forgotPassword = async ({
 
                 existingUser.password = hashPassword ?? existingUser.password;
                 await existingUser.save();
-                return existingUser;
+                return {
+                    id: existingUser._id,
+                    phoneNumber: existingUser.phoneNumber,
+                    name: existingUser.name,
+                    email: existingUser.email,
+                    gender: existingUser.gender,
+                    avatar: existingUser.avatar
+                }
+                   
             } else {
                 throw new Exception(Exception.ERROR_PASSWORD);
             }
@@ -259,16 +267,15 @@ const updateFile = async (userId, imagePath) => {
     }
 }
 
-const getUser = async ({
-    userId
-}) => {
+const getUser = async ({userId}) => {
     let existingUser = await userModel.findById(userId);
     if (!existingUser) {
         throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
     }
 
-    existingUser = await userModel.findById({}, {id: 1, phoneNumber: 1, password: 1, email: 1, gender: 1, avatar: 1});
-    return existingUser
+    existingUser = await userModel.find({role: 'CLIENT'}, {_id: 1, phoneNumber: 1, password: 1, email: 1, gender: 1, avatar: 1});
+
+    return existingUser;
 };
 
 module.exports = { register, login, forgotPassword, resetPassword, updateUser, updateFile, getUser };
