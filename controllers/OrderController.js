@@ -146,8 +146,8 @@ const totalOrdersDaySeries = async (req, res) => {
     }
 
     const userId = req.query.userId;
-    const startDay = moment(req.query.startDay, 'DD/MM/YYYY');
-    const endDay = moment(req.query.endDay, 'DD/MM/YYYY');
+    const startDay = moment(req.query.startDay, 'DD/MM/YYYY').utc();
+    const endDay = moment(req.query.endDay, 'DD/MM/YYYY').utc();
 
     try {
         let existingStatus = await orderRepository.totalOrdersDaySeries(userId, startDay, endDay);
@@ -172,11 +172,37 @@ const totalPricesDaySeries = async (req, res) => {
     }
 
     const userId = req.query.userId;
-    const startDay = moment(req.query.startDay, 'DD/MM/YYYY');
-    const endDay = moment(req.query.endDay, 'DD/MM/YYYY');
+    const startDay = moment(req.query.startDay, 'DD/MM/YYYY').utc();
+    const endDay = moment(req.query.endDay, 'DD/MM/YYYY').utc();
 
     try {
         let existingStatus = await orderRepository.totalPricesDaySeries(userId, startDay, endDay);
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Get total prices for the day successfully',
+            ...existingStatus
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
+const totalPricesDays = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    const userId = req.query.userId;
+    const startDay = moment(req.query.startDay, 'DD/MM/YYYY').utc();
+    const endDay = moment(req.query.endDay, 'DD/MM/YYYY').utc();
+
+    try {
+        let existingStatus = await orderRepository.totalPricesDays(userId, startDay, endDay);
 
         res.status(HttpStatusCode.OK).json({
             status: STATUS.SUCCESS,
@@ -198,5 +224,6 @@ module.exports = {
     totalOrdersDay,
     totalPricePricesDay,
     totalOrdersDaySeries,
-    totalPricesDaySeries
+    totalPricesDaySeries,
+    totalPricesDays
 }

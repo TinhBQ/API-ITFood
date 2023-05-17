@@ -1,8 +1,6 @@
 const { database } = require('firebase-admin');
 const Exception = require('../exceptions/Exception.js');
 const moment = require('moment-timezone');
-const { parse, format } = require('date-fns');
-const utcToZonedTime = require('date-fns-tz').utcToZonedTime;
 const {
     orderModel,
     orderItemModel,
@@ -10,6 +8,7 @@ const {
     cartItemModel, deliveryModel,
     productModel
 } = require('../models/index.js');
+const { array } = require('../middleware/upload.js');
 
 const order = async ({
     userId,
@@ -248,30 +247,33 @@ const totalPricePricesDay = async ({
 const totalOrdersDaySeries = async (userId, startDay, endDay) => {
     let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
     if (!existingUser) {
-        throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
+        throw new Exception(Exception.GET_TOTAL_ORDERS_DAY_SERIES_FAILED);
     }
 
     console.log(startDay);
     console.log(endDay);
+    let originalDate = moment(startDay);
+    startDay = originalDate.add(1, 'day');
+
+    originalDate = moment(endDay);
+    endDay = originalDate.add(1, 'day');
 
     
     const formatStr = 'DD/MM/YYYY';
 
-    const dateStart = moment.utc(startDay, formatStr).toISOString();
+    const dateStart = moment.utc(startDay, formatStr).startOf('day').utc().toISOString();
     console.log(dateStart); // 2023-04-10T17:00:00.000Z
-    const dateEnd = moment.utc(endDay, formatStr).toISOString();
-    console.log(dateEnd); // 2023-04-10T17:00:00.000Z
-    const originalDate = moment(dateEnd);
-    const newDate = originalDate.add(1, 'day');
 
-    console.log(newDate); // 2023-04-10T17:
+    const dateEnd = moment.utc(endDay, formatStr).endOf('day').utc().toISOString();
+    console.log(dateEnd); 
+    
 
-    if (newDate < dateStart) {
+    if (dateEnd < dateStart) {
         throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
     }
 
 
-    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: newDate } }, { _id: 1 });
+    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: dateEnd } }, { _id: 1 });
     console.log(existingOrder);
 
     let totalOrdersDaySeries = !existingOrder ? 0 : existingOrder.reduce((partialSum) => partialSum + 1, 0);
@@ -284,36 +286,89 @@ const totalOrdersDaySeries = async (userId, startDay, endDay) => {
 const totalPricesDaySeries = async (userId, startDay, endDay) => {
     let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
     if (!existingUser) {
-        throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
+        throw new Exception(Exception.GET_TOTAL_PRICES_DAY_SERIES_FAILED);
     }
 
     console.log(startDay);
     console.log(endDay);
+    let originalDate = moment(startDay);
+    startDay = originalDate.add(1, 'day');
+
+    originalDate = moment(endDay);
+    endDay = originalDate.add(1, 'day');
 
     
     const formatStr = 'DD/MM/YYYY';
 
-    const dateStart = moment.utc(startDay, formatStr).toISOString();
+    const dateStart = moment.utc(startDay, formatStr).startOf('day').utc().toISOString();
     console.log(dateStart); // 2023-04-10T17:00:00.000Z
-    const dateEnd = moment.utc(endDay, formatStr).toISOString();
-    console.log(dateEnd); // 2023-04-10T17:00:00.000Z
-    const originalDate = moment(dateEnd);
-    const newDate = originalDate.add(1, 'day');
 
-    console.log(newDate); // 2023-04-10T17:
+    const dateEnd = moment.utc(endDay, formatStr).endOf('day').utc().toISOString();
+    console.log(dateEnd); 
+    
 
-    if (newDate < dateStart) {
+    if (dateEnd < dateStart) {
         throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
     }
 
 
-    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: newDate } }, { _id: 0, totalPrice: 1 });
+    let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: dateEnd } }, { _id: 0, totalPrice: 1 });
     console.log(existingOrder);
 
     let totalPricesDay = !existingOrder ? 0 : existingOrder.reduce((partialSum, element) => partialSum + element.totalPrice, 0);
     console.log(totalPricesDay);
     return {
         result: totalPricesDay
+    }
+}
+
+const totalPricesDays = async (userId, startDay, endDay) => {
+    let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
+    if (!existingUser) {
+        throw new Exception(Exception.GET_TOTAL_PRICES_DAYS_FAILED);
+    }
+    let originalDate = moment(startDay);
+    startDay = originalDate.add(1, 'day');
+    console.log(startDay);
+
+    originalDate = moment(endDay);
+    endDay = originalDate.add(1, 'day');
+    console.log(endDay)
+
+    const formatStr = 'DD/MM/YYYY';
+
+    let arr = [];
+    
+    while (endDay >= startDay) {
+        
+        let dateStart = moment.utc(startDay, formatStr).startOf('day').utc().toISOString();
+        console.log(dateStart); // 2023-04-10T17:00:00.000Z
+    
+        let dateEnd = moment.utc(startDay, formatStr).endOf('day').utc().toISOString();
+        console.log(dateEnd); 
+        
+    
+        if (dateEnd < dateStart) {
+            throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
+        }
+
+        let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: dateEnd } }, { _id: 0, totalPrice: 1 });
+        let totalPricesDay = !existingOrder ? 0 : existingOrder.reduce((partialSum, element) => partialSum + element.totalPrice, 0);
+
+        let newObject = {
+            date: startDay.format('DD/MM/YYYY'),
+            totalPrice: totalPricesDay
+        }
+
+        arr.push(newObject);
+        console.log(arr);
+
+        originalDate = moment(startDay);
+        startDay = originalDate.add(1, 'day');
+    }
+     
+    return {
+        result: arr
     }
 }
 
@@ -324,5 +379,6 @@ module.exports = {
     totalOrdersDay,
     totalPricePricesDay,
     totalOrdersDaySeries,
-    totalPricesDaySeries
+    totalPricesDaySeries,
+    totalPricesDays
 }

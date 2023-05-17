@@ -42,6 +42,9 @@ module.exports = class Exception extends Error {
     static GET_USER_FAILER = 'Get user failed';
     static GET_TOTAL_ORDERS_FAILED = 'Get total orders failed';
     static GET_TOTAL_PRICES_FAILED = 'Get total prices failed';
+    static GET_TOTAL_ORDERS_DAY_SERIES_FAILED = 'Get total orders day services failed';
+    static GET_TOTAL_PRICES_DAY_SERIES_FAILED = 'Get total prices day services failed';
+    static GET_TOTAL_PRICES_DAYS_FAILED = 'Get total prices days failed';
 
     constructor(message, validatorErrors={}) {
         super(message); // call constructor of parent class(Error)
