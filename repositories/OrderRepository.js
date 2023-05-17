@@ -1,3 +1,4 @@
+const { database } = require('firebase-admin');
 const Exception = require('../exceptions/Exception.js');
 const {
     orderModel,
@@ -20,12 +21,17 @@ const order = async ({
             throw new Exception(Exception.ORDER_FAILED);
         }
 
+        let existingCartItem = await cartItemModel.findOne({ cartId: existingCart._id });
+        if (!existingCartItem) {
+            throw new Exception(Exception.ORDER_FAILED);
+        } 
+
         // Get Price
-        let existingCartItem = await cartItemModel.find({ cartId: existingCart._id }, { _id: 0, product: 1, quantity: 1 }).populate(
+        existingCartItem = await cartItemModel.find({ cartId: existingCart._id }, { _id: 0, product: 1, quantity: 1 }).populate(
             {
                 path: "product",
                 select: { _id: 0, price: 1 }
-            });
+            });       
 
         if (!existingCartItem) {
             throw new Exception(Exception.ORDER_FAILED);
@@ -56,7 +62,7 @@ const order = async ({
             throw new Exception(Exception.ORDER_FAILED);
         }
 
-        await orderModel.drop
+        // await orderModel.drop
         // Insert Order done
 
         // Insert OrderItem
@@ -172,7 +178,7 @@ const status = async ({
 }) => {
     let existingUser = await userModel.findById(userId);
     if (existingUser) {
-        let existingOrder = await orderModel.find({ userId: existingUser._id }, { _id: 1, status: 1});
+        let existingOrder = await orderModel.find({ userId: existingUser._id }, { _id: 1, status: 1 });
 
         if (!existingOrder) {
             throw new Exception(Exception.GET_STATUS_FAILED);
@@ -184,10 +190,31 @@ const status = async ({
     }
 };
 
+const totalOrdersDay = async ({
+    userId
+}) => {
+    let existingUser = await userModel.find({ _id: userId, role: 'MANAGER' });
+    if (!existingUser) {
+        throw new Exception(Exception.GET_STATUS_FAILED);
+    }
 
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0); // Đặt giờ, phút, giây, mili giây về 0
+    console.log(startOfDay)
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999); 
+
+    let existingOrder = await orderModel.find({createdAt: { $gte: startOfDay, $lte: endOfDay } }, { _id: 1 });
+    console.log(existingOrder);
+
+    let totalOrdersDay = !existingOrder ? 0 : existingOrder.reduce((partialSum) => partialSum + 1, 0);
+    console.log(totalOrdersDay);
+};
 
 module.exports = {
     order,
     totalPrice,
-    status
+    status,
+    totalOrdersDay
 }
