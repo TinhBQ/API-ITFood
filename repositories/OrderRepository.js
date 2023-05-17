@@ -228,6 +228,7 @@ const totalPricePricesDay = async ({
 
     const startOfDay = new Date();
      // Đặt giờ, phút, giây, mili giây về 0
+    startOfDay.setHours(0, 0, 0, 0);
     console.log(startOfDay)
 
     const endOfDay = new Date();
