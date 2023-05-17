@@ -266,6 +266,10 @@ const totalOrdersDaySeries = async (userId, startDay, endDay) => {
 
     console.log(newDate); // 2023-04-10T17:
 
+    if (newDate < dateStart) {
+        throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
+    }
+
 
     let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: newDate } }, { _id: 1 });
     console.log(existingOrder);
@@ -297,6 +301,10 @@ const totalPricesDaySeries = async (userId, startDay, endDay) => {
     const newDate = originalDate.add(1, 'day');
 
     console.log(newDate); // 2023-04-10T17:
+
+    if (newDate < dateStart) {
+        throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
+    }
 
 
     let existingOrder = await orderModel.find({ createdAt: { $gte: dateStart, $lte: newDate } }, { _id: 0, totalPrice: 1 });
