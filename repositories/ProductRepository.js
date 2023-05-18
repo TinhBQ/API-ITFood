@@ -63,6 +63,24 @@ const getProducts = async ({
     }
 };
 
+const getAllProducts = async () => {
+    let existingProduct = await productModel.find({}, {
+        _id: 1,
+        name: 1,
+        description: 1,
+        price: 1,
+        quantity: 1,
+        image: 1,
+        categoryId: 1
+    });
+
+    if (!existingProduct) {
+        throw new Exception(Exception.GET_PRODUCTS_FAILED);
+    }
+    
+    return existingProduct;
+};
+
 const getProductsBestseller = async ({
 
 }) => {
@@ -195,11 +213,11 @@ const deleteProduct = async ({
     if (!existingUser) {
         throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
     }
-    
-    let existingProduct = await productModel.deleteOne({_id: productId});
+
+    let existingProduct = await productModel.deleteOne({ _id: productId });
     if (!existingProduct) {
         throw new Exception(Exception.UPDATE_PRODUCT_FAILED);
     }
 };
 
-module.exports = { getProducts, getProductsBestseller, addProduct, updateProduct, deleteProduct }
+module.exports = { getProducts, getProductsBestseller, addProduct, updateProduct, deleteProduct, getAllProducts }
