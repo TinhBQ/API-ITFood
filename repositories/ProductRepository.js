@@ -63,22 +63,47 @@ const getProducts = async ({
     }
 };
 
-const getAllProducts = async () => {
-    let existingProduct = await productModel.find({}, {
-        _id: 1,
-        name: 1,
-        description: 1,
-        price: 1,
-        quantity: 1,
-        image: 1,
-        categoryId: 1
-    });
-
-    if (!existingProduct) {
+const getAllProducts = async ({
+    page,
+    size,
+    searchString
+}) => {
+    const filteredCategories = await productModel.aggregate([
+        {
+            $match: {
+                $or: [
+                    {
+                        name: { $regex: `.*${searchString}.*`, $options: 'i' }
+                    },
+                    {
+                        description: { $regex: `.*${searchString}.*`, $options: 'i' }
+                    },
+                ]
+            }
+        },
+        {
+            $skip: (page - 1) * size // số phần tử bỏ qua
+        },
+        {
+            $limit: size // Giới hạn phần tử trong size
+        },
+        {
+            $project: {
+                _id: 1,
+                name: 1,
+                description: 1,
+                price: 1,
+                quantity: 1,
+                image: 1,
+                categoryId: 1
+            }
+        }
+    ]);
+    if (filteredCategories) {
+        return filteredCategories;
+    } else {
         throw new Exception(Exception.GET_PRODUCTS_FAILED);
     }
-    
-    return existingProduct;
 };
 
 const getProductsBestseller = async ({

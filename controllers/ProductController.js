@@ -150,8 +150,12 @@ const getAllProducts = async (req, res) => {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
     }
 
+    let { page = 1, size = MAX_RECORDS, searchString = '' } = req.query;
+    size = size >= MAX_RECORDS ? MAX_RECORDS : size;
+
+
     try {
-        const filteredCategories = await productRepository.getAllProducts();
+        const filteredCategories = await productRepository.getAllProducts({page, size, searchString});
 
         res.status(HttpStatusCode.OK).json({
             status: STATUS.SUCCESS,
