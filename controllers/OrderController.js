@@ -217,6 +217,61 @@ const totalPricesDays = async (req, res) => {
     }
 };
 
+const updateStatus = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    const {
+        userId,
+        orderId,
+        status
+    } = req.body;
+
+    try {
+        let existingStatus = await orderRepository.updateStatus({ userId, orderId, status });
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Update status successfully',
+            results: existingStatus
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
+const getProducts = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array() });
+    }
+
+    const {
+        userId,
+        orderId
+    } = req.query;
+
+    try {
+        let existingStatus = await orderRepository.getProducts({ userId, orderId });
+
+        res.status(HttpStatusCode.OK).json({
+            status: STATUS.SUCCESS,
+            message: 'Get Product by OrderId successfully',
+            results: existingStatus
+        });
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: STATUS.ERROR,
+            message: `${exception.message}`
+        });
+    }
+};
+
 module.exports = {
     order,
     totalPrice,
@@ -225,5 +280,7 @@ module.exports = {
     totalPricePricesDay,
     totalOrdersDaySeries,
     totalPricesDaySeries,
-    totalPricesDays
+    totalPricesDays,
+    updateStatus,
+    getProducts
 }

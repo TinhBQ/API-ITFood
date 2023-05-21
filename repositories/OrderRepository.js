@@ -180,13 +180,35 @@ const status = async ({
 }) => {
     let existingUser = await userModel.findById(userId);
     if (existingUser) {
-        let existingOrder = await orderModel.find({ userId: existingUser._id }, { _id: 1, status: 1 });
+        let existingOrder = await orderModel.find({ userId: existingUser._id }, { _id: 1, address: 1, phoneNumber: 1, delivery: 1, status: 1, totalPrice: 1 }).populate(
+            {
+                path: "delivery",
+                select: { _id: 0, name: 1 }
+            });
+
+        // console.log(existingOrder)
+
+        let objHandlingOrder = existingOrder.map((order) => {
+            let { _id, delivery, status, totalPrice, ...objNew } = order;
+            objNew._doc.delivery = delivery.name;
+
+            status = status === 0 ? 'Chờ xác nhận'
+                : (status === 1 ? 'Chờ đơn vị vận chuyển'
+                    : (status === 2 ? 'Đang giao hàng'
+                        : (status === 3 ? 'Giao hàng thành công' : 'Đã hủy đơn')));
+            objNew._doc.status = status;
+            objNew._doc.totalPrice = totalPrice.toFixed(2);
+
+            return objNew._doc;
+        });
+
+        console.log(objHandlingOrder);
 
         if (!existingOrder) {
             throw new Exception(Exception.GET_STATUS_FAILED);
         }
 
-        return existingOrder;
+        return objHandlingOrder;
     } else {
         throw new Exception(Exception.GET_STATUS_FAILED);
     }
@@ -226,7 +248,7 @@ const totalPricePricesDay = async ({
     }
 
     const startOfDay = new Date();
-     // Đặt giờ, phút, giây, mili giây về 0
+    // Đặt giờ, phút, giây, mili giây về 0
     startOfDay.setHours(0, 0, 0, 0);
     console.log(startOfDay)
 
@@ -258,15 +280,15 @@ const totalOrdersDaySeries = async (userId, startDay, endDay) => {
     originalDate = moment(endDay);
     endDay = originalDate.add(1, 'day');
 
-    
+
     const formatStr = 'DD/MM/YYYY';
 
     const dateStart = moment.utc(startDay, formatStr).startOf('day').utc().toISOString();
     console.log(dateStart); // 2023-04-10T17:00:00.000Z
 
     const dateEnd = moment.utc(endDay, formatStr).endOf('day').utc().toISOString();
-    console.log(dateEnd); 
-    
+    console.log(dateEnd);
+
 
     if (dateEnd < dateStart) {
         throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
@@ -297,15 +319,15 @@ const totalPricesDaySeries = async (userId, startDay, endDay) => {
     originalDate = moment(endDay);
     endDay = originalDate.add(1, 'day');
 
-    
+
     const formatStr = 'DD/MM/YYYY';
 
     const dateStart = moment.utc(startDay, formatStr).startOf('day').utc().toISOString();
     console.log(dateStart); // 2023-04-10T17:00:00.000Z
 
     const dateEnd = moment.utc(endDay, formatStr).endOf('day').utc().toISOString();
-    console.log(dateEnd); 
-    
+    console.log(dateEnd);
+
 
     if (dateEnd < dateStart) {
         throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
@@ -338,16 +360,16 @@ const totalPricesDays = async (userId, startDay, endDay) => {
     const formatStr = 'DD/MM/YYYY';
 
     let arr = [];
-    
+
     while (endDay >= startDay) {
-        
+
         let dateStart = moment.utc(startDay, formatStr).startOf('day').utc().toISOString();
         console.log(dateStart); // 2023-04-10T17:00:00.000Z
-    
+
         let dateEnd = moment.utc(startDay, formatStr).endOf('day').utc().toISOString();
-        console.log(dateEnd); 
-        
-    
+        console.log(dateEnd);
+
+
         if (dateEnd < dateStart) {
             throw new Exception(Exception.GET_TOTAL_ORDERS_FAILED);
         }
@@ -366,11 +388,61 @@ const totalPricesDays = async (userId, startDay, endDay) => {
         originalDate = moment(startDay);
         startDay = originalDate.add(1, 'day');
     }
-     
+
     return {
         result: arr
     }
 }
+
+const updateStatus = async ({
+    userId,
+    orderId,
+    status
+}) => {
+    let existingUser = await userModel.findOne({ _id: userId, role: 'MANAGER' });
+    console.log(existingUser);
+    if (existingUser) {
+
+        if ((status > 4) || (status <= 0)) throw new Exception(Exception.GET_STATUS_FAILED);
+
+        let existingOrder = await orderModel.findById(orderId);
+
+        if (status <= existingOrder.status) throw new Exception(Exception.GET_STATUS_FAILED);
+        if ((existingOrder.status === 3) || (existingOrder.status === 4)) throw new Exception(Exception.GET_STATUS_FAILED);
+
+        existingOrder.status = status ?? existingOrder.status;
+        existingOrder.save();
+
+        let strStatus = existingOrder.status === 1 ? 'Chờ đơn vị vận chuyển'
+            : (existingOrder.status === 2 ? 'Đang giao hàng'
+                : (existingOrder.status === 3 ? 'Giao hàng thành công' : 'Đã hủy đơn'));
+
+        if (!existingOrder) {
+            throw new Exception(Exception.GET_STATUS_FAILED);
+        }
+
+        return {
+            result: strStatus
+        }
+
+    } else {
+        throw new Exception(Exception.GET_STATUS_FAILED);
+    }
+};
+
+const getProducts = async({
+    userId,
+    orderId
+}) => {
+    let existingUser = await userModel.findById(userId);
+    if (!existingUser) {
+        throw new Exception(Exception.GET_PRODUCTS_BY_ORDER_ID_FAILED);
+    }
+
+    let existingOrderItem = await orderItemModel.find({orderId}, {_id: 1, name: 1, description: 1, price: 1, image: 1, quantity: 1});
+
+    return existingOrderItem;
+};
 
 module.exports = {
     order,
@@ -380,5 +452,7 @@ module.exports = {
     totalPricePricesDay,
     totalOrdersDaySeries,
     totalPricesDaySeries,
-    totalPricesDays
+    totalPricesDays,
+    updateStatus,
+    getProducts
 }
