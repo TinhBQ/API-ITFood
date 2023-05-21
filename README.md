@@ -37,36 +37,46 @@ v![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/7edf5b97-3485-4d2
 ## 18. Order products in cart
 ![image](https://user-images.githubusercontent.com/81704759/236496920-0a322f82-85a8-4b4c-9f13-33b9e20cba38.png)
 ## 19. Order Status
-![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/af7bee4e-9659-48da-b8eb-1f63147dbf34)
-## 20. Get Deliveries
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/25d77c26-da2e-4516-90b8-c1d14c1c3cf8)
+## 20. Update Status
+- 0: Chờ xác nhận
+- 1: Chờ đơn vị vận chuyển
+- 2: Đang giao hàng
+- 3: Giao hàng thành công
+- 4: Đã hủy đơn
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/d1348d3e-fb86-4515-85e1-ddaf6fb9d732)
+## 21. Get Produts by OderId
+![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/5656a72d-6b75-4f90-8171-35160d42ae05)
+
+## 22. Get Deliveries
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/f9081302-9122-4369-ad9d-3e3694c56f15)
-## 21. Add Comment
+## 23. Add Comment
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/70a3cfee-be72-49a4-8205-992ee7ab296f)
-## 22. Add Comment (Feedback Comment)
+## 24. Add Comment (Feedback Comment)
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/fdd0c176-0706-426b-b96c-1fbe265abb2b)
-## 23. Update Comment
+## 25. Update Comment
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/1fd52147-920d-439a-9144-8848e72e9f3e)
-## 24. Delete Comment
+## 26. Delete Comment
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/3d87f1da-22fe-479a-937f-16a676ea9939)
-## 25. Get Comment
+## 27. Get Comment
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/5ce44e61-84f2-491e-841b-13f7df2e6025)
-## 26. Get Comment (Feedback Comment)
+## 28. Get Comment (Feedback Comment)
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b13d2f84-764f-487b-b7e7-3f5c4efcaf32)
-## 27. Get Products (best-seller)
+## 29. Get Products (best-seller)
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/9d34a18a-95bf-4c13-9f83-0121337cd2e6)
-## 28. Add Category
+## 30. Add Category
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/5ea123cc-c199-4253-b8a1-413a408a8447)
-## 29. Updare Category
+## 31. Updare Category
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/59138a12-737e-4135-8174-8bc9cbfee227)
-## 30. Delete Category
+## 32. Delete Category
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/f5a33d8d-26e6-483e-aee0-129cc41528e7)
-## 31. Add Product
+## 33. Add Product
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/65e267fa-271c-431b-857a-c5366711a1f9)
-## 32. Update Product
+## 34. Update Product
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/4b9bb2ca-3958-4bc2-929c-dee8d0d9a523)
-## 33. Delete Product
+## 35. Delete Product
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/b9068ae9-7f76-4fec-8e99-291268fee50d)
-## 34. Get User By PhoneNumber
+## 36. Get User By PhoneNumber
 ![image](https://github.com/TinhBQ/API-ITFood/assets/81704759/d4fe88ca-6e2e-4306-a7bc-6f73c67aa21a)
 
 
