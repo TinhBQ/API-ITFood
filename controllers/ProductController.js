@@ -127,7 +127,7 @@ const deleteProduct = async (req, res) => {
     const {
         userId,
         productId
-    } = req.body;
+    } = req.query;
 
     try {
         await productRepository.deleteProduct({userId, productId});
