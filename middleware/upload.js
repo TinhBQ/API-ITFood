@@ -15,18 +15,10 @@ const storage = multer.diskStorage({
 const upload = multer ({
     storage: storage,
     fileFilter: (req, file, callback) => {
-        if (
-            file.mimetype == "image/png" ||
-            file.mimetype == "image/jpg"
-        ) {
-            callback(null, true);
-        } else {
-            console.log("only jpg & png files are supported");
-            callback(null, false);
-        }
+        callback(null, true);
     },
     limits: {
-        fieldSize: 1024 * 1024 * 2
+        fieldSize: 1024 * 1024 * 4
     }
 })
 
