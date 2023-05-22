@@ -116,7 +116,7 @@ const deleteCategory = async (req, res) => {
     const {
         userId,
         categoryId
-    } = req.body;
+    } = req.query;
 
     try {
         let existingCategory = await categoryRepository.deleteCategory({userId, categoryId});
