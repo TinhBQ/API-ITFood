@@ -142,9 +142,9 @@ const deleteCategory = async ({
     }
 
     let existingProduct = await productModel.deleteMany({categoryId: categoryId});
-    if (!existingProduct) {
-        throw new Exception(Exception.DELETE_CATEGORY_FAILED);
-    }
+    // if (!existingProduct) {
+    //     throw new Exception(Exception.DELETE_CATEGORY_FAILED);
+    // }
 
     await categoryModel.deleteOne({_id: categoryId});
 }
